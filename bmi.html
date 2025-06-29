@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BMI Calculator - AeroAssessX</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #002233, #004466);
+      color: #fff;
+    }
+
+    .bmi-container {
+      max-width: 600px;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      margin: 60px auto;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #00d9ff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 8px;
+      font-weight: 500;
+      color: #e6faff;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #f0f0f0;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      background-color: #00d4ff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #00aacc;
+    }
+
+    .result {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .note {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-top: 10px;
+    }
+
+    nav.navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #001f33;
+      padding: 1rem 2rem;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .logo a {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00d4ff;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    span1 {
+      color: #fff;
+    }
+
+    span {
+      color: #00ffcc;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🌐 Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="AeroAssessX Logo" />
+      <a href="#">Aero<span1>Assess</span1><span>X</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="eligibility.html">Eligibility Check</a></li>
+      <li><a href="bmi.html">BMI Checker</a></li>
+      <li><a href="guide.html">DGCA Guide</a></li>
+      <li><a href="ame.html">AME Locator</a></li>
+      <li><a href="fitness.html">Fitness Tips</a></li>
+    </ul>
+  </nav>
+
+  <div class="bmi-container">
+    <h1>BMI Calculator</h1>
+
+    <label for="age">Enter Age (in years):</label>
+    <input type="number" id="age" required>
+
+    <label for="gender">Select Gender:</label>
+    <select id="gender" required>
+      <option value="">-- Select --</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="height">Enter Height (in cm):</label>
+    <input type="number" id="height" required>
+
+    <label for="weight">Enter Weight (in kg):</label>
+    <input type="number" id="weight" required>
+
+    <button onclick="calculateBMI()">Check BMI</button>
+
+    <div class="result" id="bmiResult"></div>
+    <div class="note">Ideal BMI for flying eligibility is between 18.5 and 24.9</div>
+  </div>
+
+  <script>
+    function calculateBMI() {
+      const height = parseFloat(document.getElementById("height").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const age = parseInt(document.getElementById("age").value);
+      const gender = document.getElementById("gender").value;
+      const result = document.getElementById("bmiResult");
+
+      if (!height || !weight || !age || !gender) {
+        result.textContent = "⚠️ Please fill in all fields.";
+        return;
+      }
+
+      const bmi = weight / ((height / 100) ** 2);
+      const roundedBMI = bmi.toFixed(2);
+      let message = `Your BMI is ${roundedBMI}. `;
+
+      if (bmi < 18.5) {
+        message += "⚠️ You are underweight for DGCA eligibility.";
+      } else if (bmi > 24.9) {
+        message += "⚠️ You are above the ideal BMI range. Additional tests may be required.";
+      } else {
+        message += "✅ You are within the ideal BMI range for pilot eligibility.";
+      }
+
+      result.textContent = message;
+    }
+  </script>
+</body>
+</html>
